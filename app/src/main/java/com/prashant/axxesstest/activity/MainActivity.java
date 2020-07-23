@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity
                     etSearch.clearFocus();
                     if(etSearch.getText().toString().length() > 0)
                     {
-//                        callApi(etSearch.getText().toString());
+                        callApi(etSearch.getText().toString());
                     }
                     else
                     {
@@ -98,21 +98,21 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void afterTextChanged(Editable s)
             {
-                ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                /*ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
                 Observable<Response> dataObservable = apiInterface.getResponse(s.toString(),"Client-ID 137cda6b5008a7c");
                 dataObservable
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(data, handleError());
-
+*/
 
             }
         });
 
     }
 
-    private void handleResults(Response data) {
+    /*private void handleResults(Response data) {
         if (data != null)
         {
             shapeAdapter = new ShapeAdapter(MainActivity.this, R.layout.row_shape, (ArrayList<Datum>) data.getData());
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity
         Toast.makeText(this, "ERROR IN FETCHING API RESPONSE. Try again",
                 Toast.LENGTH_LONG).show();
     }
-
+*/
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity
 
 
     //Fetching data from server
-    /*private void callApi(String query)
+    private void callApi(String query)
     {
 
         if(data.size() > 0 )
@@ -166,9 +166,11 @@ public class MainActivity extends AppCompatActivity
 
         Call<com.prashant.axxesstest.model.ApiResponse.Response> call = apiInterface.getResponse(query,"Client-ID 137cda6b5008a7c");
 
-        call.enqueue(new Callback<com.prashant.axxesstest.model.ApiResponse.Response>() {
+        call.enqueue(new Callback<Response>()
+        {
+
             @Override
-            public void onResponse(Call<com.prashant.axxesstest.model.ApiResponse.Response> call, Response<com.prashant.axxesstest.model.ApiResponse.Response> response) {
+            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                 progressDialog.dismiss();
                 if(response.code() == 200)
                 {
@@ -203,7 +205,7 @@ public class MainActivity extends AppCompatActivity
         });
 
     }
-*/
+
     @Override
     public void onBackPressed()
     {

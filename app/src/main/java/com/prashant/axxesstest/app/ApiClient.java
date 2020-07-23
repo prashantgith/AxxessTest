@@ -12,11 +12,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient
 {
 
-    public static final String BASE_URL = "https://api.imgur.com/3/gallery/search/";
-    private static Retrofit retrofit = null;
+//    public static final String BASE_URL = "https://api.imgur.com/3/gallery/search/";
+//    private static Retrofit retrofit = null;
 
     //returns retrofit object
-    public static Retrofit getClient()
+    /*public static Retrofit getClient()
     {
         if (retrofit==null) {
 
@@ -38,11 +38,10 @@ public class ApiClient
         }
         return retrofit;
     }
+*/
 
 
 
-
-/*
     public static final String BASE_URL = "https://api.imgur.com/3/gallery/search/";
     private static Retrofit retrofit = null;
 
@@ -57,7 +56,6 @@ public class ApiClient
         }
         return retrofit;
     }
-*/
 
 
 }

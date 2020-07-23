@@ -12,6 +12,6 @@ public interface ApiInterface
 {
     //Get data from search api
     @GET("1/")
-//    Call<Response> getResponse(@Query("q") String shape,@Header("Authorization") String token);
-    Observable<Response> getResponse(@Query("q") String shape, @Header("Authorization") String token);
+    Call<Response> getResponse(@Query("q") String shape,@Header("Authorization") String token);
+//    Observable<Response> getResponse(@Query("q") String shape, @Header("Authorization") String token);
 }

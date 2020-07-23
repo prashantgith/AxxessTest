@@ -10,8 +10,8 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
-        android:layout_height="60dp"
         android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
@@ -19,34 +19,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:popupTheme="@style/AppTheme.PopupOverlay">
+
             <LinearLayout
                 android:id="@+id/ll_tool"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-            <EditText
-                android:id="@+id/edt_search"
-                android:layout_width="0dp"
-                android:layout_weight="0.85"
-                android:layout_height="match_parent"
-                android:paddingStart="16dp"
-                android:hint="@string/search"
-                android:textColorHint="@color/colorWhite"
-                android:textSize="16sp"
-                android:maxLines="1"
-                android:textColor="@color/colorWhite"/>
+                <EditText
+                    android:id="@+id/edt_search"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.85"
+                    android:hint="@string/search"
+                    android:maxLines="1"
+                    android:paddingStart="16dp"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:textSize="16sp" />
 
-            <ImageView
-                android:id="@+id/img_search"
-                android:layout_width="0dp"
-                android:layout_weight="0.15"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                app:srcCompat="@drawable/ic_search"/>
+                <ImageView
+                    android:id="@+id/img_search"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.15"
+                    android:padding="16dp"
+                    app:srcCompat="@drawable/ic_search" />
 
             </LinearLayout>
 
@@ -59,39 +60,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <GridView
-        android:layout_marginTop="8dp"
-        android:id="@+id/gv_data"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:columnWidth="90dp"
-        android:numColumns="auto_fit"
-        android:gravity="center"
-        android:horizontalSpacing="8dp"
-        android:verticalSpacing="16dp"
-        />
+        <GridView
+            android:id="@+id/gv_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:columnWidth="90dp"
+            android:gravity="center"
+            android:horizontalSpacing="8dp"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="16dp" />
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/ll_nodata"
-            android:gravity="center"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@mipmap/ic_launcher_round"/>
+                android:src="@mipmap/ic_launcher_round" />
 
             <TextView
-                android:textColor="@color/colorBlack"
-                android:textSize="16sp"
-                android:layout_marginTop="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/no_data_found"/>
+                android:layout_marginTop="16dp"
+                android:text="@string/no_data_found"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp" />
 
         </LinearLayout>
 
