@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">AxxessTest</string>
+    <string name="check_internet">Please check your internet connection.</string>
+    <string name="loader_msg">Please wait..</string>
+    <string name="unable_load_data">Unable to load data.Please try again...</string>
+    <string name="something_went_wrong">Something went wrong, please try again!</string>
+    <string name="write_something">Please write something...</string>
+    <string name="search">Search</string>
+    <string name="exit">Press again to Exit.</string>
+    <string name="submit">Submit</string>
+    <string name="comment_on_image">Put you comments here...</string>
+</resources>
