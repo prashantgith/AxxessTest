@@ -9,4 +9,5 @@
     <string name="exit">Press again to Exit.</string>
     <string name="submit">Submit</string>
     <string name="comment_on_image">Put you comments here...</string>
+    <string name="no_data_found">Data not available.</string>
 </resources>

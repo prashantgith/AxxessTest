@@ -20,14 +20,17 @@ import com.prashant.axxesstest.adapter.ShapeAdapter;
 import com.prashant.axxesstest.app.ApiClient;
 import com.prashant.axxesstest.app.ApiInterface;
 import com.prashant.axxesstest.model.ApiResponse.Datum;
+import com.prashant.axxesstest.model.ApiResponse.Response;
 import com.prashant.axxesstest.utils.CommonUtils;
 import com.prashant.axxesstest.utils.TransparentProgressDialog;
 
 import java.util.ArrayList;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 //23/7
 public class MainActivity extends AppCompatActivity
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<Datum> data;
     private LinearLayout llTool;
     private boolean exit = false;
+    private LinearLayout llNoData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -51,6 +55,7 @@ public class MainActivity extends AppCompatActivity
         etSearch = findViewById(R.id.edt_search);
         gvData = findViewById(R.id.gv_data);
         llTool = findViewById(R.id.ll_tool);
+        llNoData = findViewById(R.id.ll_nodata);
         data = new ArrayList<>();
 
 
@@ -62,7 +67,7 @@ public class MainActivity extends AppCompatActivity
                     etSearch.clearFocus();
                     if(etSearch.getText().toString().length() > 0)
                     {
-                        callApi();
+//                        callApi(etSearch.getText().toString());
                     }
                     else
                     {
@@ -75,6 +80,9 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+
+
+
 
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -90,11 +98,38 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void afterTextChanged(Editable s)
             {
+                ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+
+                Observable<Response> dataObservable = apiInterface.getResponse(s.toString(),"Client-ID 137cda6b5008a7c");
+                dataObservable
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(data, handleError());
+
 
             }
         });
 
     }
+
+    private void handleResults(Response data) {
+        if (data != null)
+        {
+            shapeAdapter = new ShapeAdapter(MainActivity.this, R.layout.row_shape, (ArrayList<Datum>) data.getData());
+            gvData.setAdapter(shapeAdapter);
+
+        } else {
+            Toast.makeText(this, "NO RESULTS FOUND",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void handleError() {
+
+        Toast.makeText(this, "ERROR IN FETCHING API RESPONSE. Try again",
+                Toast.LENGTH_LONG).show();
+    }
+
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
@@ -112,12 +147,16 @@ public class MainActivity extends AppCompatActivity
 
 
     //Fetching data from server
-    private void callApi()
+    /*private void callApi(String query)
     {
+
         if(data.size() > 0 )
         {
             data.clear();
         }
+
+        llNoData.setVisibility(View.GONE);
+        gvData.setVisibility(View.VISIBLE);
 
         final TransparentProgressDialog progressDialog = new TransparentProgressDialog(MainActivity.this);
         progressDialog.show();
@@ -125,33 +164,46 @@ public class MainActivity extends AppCompatActivity
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-        Call<com.prashant.axxesstest.model.ApiResponse.Response> call = apiInterface.getResponse("vanilla","Client-ID 137cda6b5008a7c");
+        Call<com.prashant.axxesstest.model.ApiResponse.Response> call = apiInterface.getResponse(query,"Client-ID 137cda6b5008a7c");
 
         call.enqueue(new Callback<com.prashant.axxesstest.model.ApiResponse.Response>() {
             @Override
             public void onResponse(Call<com.prashant.axxesstest.model.ApiResponse.Response> call, Response<com.prashant.axxesstest.model.ApiResponse.Response> response) {
                 progressDialog.dismiss();
-                if(response.code() == 200) {
+                if(response.code() == 200)
+                {
                     Log.e(TAG, "onResponse: " + response.body().getSuccess());
-                    data.addAll(response.body().getData());
-                    shapeAdapter = new ShapeAdapter(MainActivity.this, R.layout.row_shape, data);
-                    gvData.setAdapter(shapeAdapter);
+                    if(response.body().getData().size() > 0)
+                    {
+                        data.addAll(response.body().getData());
+                        shapeAdapter = new ShapeAdapter(MainActivity.this, R.layout.row_shape, data);
+                        gvData.setAdapter(shapeAdapter);
+                    }
+                    else
+                    {
+                        llNoData.setVisibility(View.VISIBLE);
+                        gvData.setVisibility(View.GONE);
+                    }
                 }
                 else
                 {
+                    llNoData.setVisibility(View.VISIBLE);
+                    gvData.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(),getResources().getString(R.string.something_went_wrong),Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<com.prashant.axxesstest.model.ApiResponse.Response> call, Throwable t) {
+                llNoData.setVisibility(View.VISIBLE);
+                gvData.setVisibility(View.GONE);
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(),getResources().getString(R.string.unable_load_data),Toast.LENGTH_SHORT).show();
             }
         });
 
     }
-
+*/
     @Override
     public void onBackPressed()
     {

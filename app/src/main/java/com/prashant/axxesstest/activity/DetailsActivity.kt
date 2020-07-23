@@ -1,7 +1,10 @@
 package com.prashant.axxesstest.activity
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -67,8 +70,7 @@ class DetailsActivity : AppCompatActivity()
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         list = savedInstanceState.getParcelableArrayList<Comment>("comments") as ArrayList<Comment>
-        val adapter = CommentsAdapter(this, list)
-        rv_comments.adapter = adapter
+        setDataAdapter()
     }
 
     fun setListeners()
@@ -87,6 +89,13 @@ class DetailsActivity : AppCompatActivity()
                 if(status > -1){
                     edt_comment?.setText("")
                     edt_comment.clearFocus()
+
+                    val view = this.currentFocus
+                    if (view != null) {
+                        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        imm.hideSoftInputFromWindow(view!!.getWindowToken(), 0)
+                    }
+
                     //update commentList
                     fillComments()
                 }
@@ -107,7 +116,23 @@ class DetailsActivity : AppCompatActivity()
         //retreiving comments list from db
         list = databaseHandler.viewComments(foodId) as ArrayList<Comment>
 
-        val adapter = CommentsAdapter(this, list)
-        rv_comments.adapter = adapter
+        setDataAdapter()
+    }
+
+    fun setDataAdapter()
+    {
+        if(list.size > 0)
+        {
+            ll_nodetails.visibility = View.GONE
+            rv_comments.visibility = View.VISIBLE
+
+            val adapter = CommentsAdapter(this, list)
+            rv_comments.adapter = adapter
+        }
+        else
+        {
+            ll_nodetails.visibility = View.VISIBLE
+            rv_comments.visibility = View.GONE
+        }
     }
 }

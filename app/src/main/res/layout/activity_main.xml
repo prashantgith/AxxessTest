@@ -19,11 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:popupTheme="@style/AppTheme.PopupOverlay">
-            <!--<ImageView
-                android:id="@+id/Img_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_backspace"/>-->
             <LinearLayout
                 android:id="@+id/ll_tool"
                 android:focusable="true"
@@ -60,6 +55,9 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <GridView
         android:layout_marginTop="8dp"
@@ -73,5 +71,30 @@
         android:verticalSpacing="16dp"
         />
 
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ll_nodata"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/ic_launcher_round"/>
+
+            <TextView
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_data_found"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
